@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ห้องสมุดความรู้บน GitHub Pages | ชั้นหนังสือแห่งความรู้</title>
+<link rel="stylesheet" href="../assets/css/book.css">
+</head>
+<body>
+<header class="book-header">
+  <a class="back-link" href="../index.html">← กลับห้องสมุด</a>
+  <span class="cat">AI / Automation</span>
+  <h1>สร้างห้องสมุดความรู้ส่วนตัวด้วย GitHub Pages</h1>
+  <p class="meta">โครงสร้างที่ AI ดูแลต่อได้ · 24/08/2026</p>
+</header>
+
+<main class="book-body">
+
+<h2>แนวคิด</h2>
+<p>รวบรวมคู่มือ โน้ต และบทเรียนทั้งหมดของเราไว้ในเว็บเดียวที่ <code>&lt;username&gt;.github.io</code> — ฟรี ไม่ต้องดูแลเซิร์ฟเวอร์ และออกแบบให้ "AI ผู้ดูแล" ช่วยเพิ่มหนังสือให้ได้อย่างปลอดภัย</p>
+
+<h2>สถาปัตยกรรม 4 ชั้น</h2>
+<ol>
+  <li><strong>ชั้นข้อมูล</strong> — <code>data/books.json</code> เก็บรายการหนังสือทั้งหมดไว้ที่เดียว ไม่แก้ใน HTML โดยตรง</li>
+  <li><strong>ชั้นเจนเนอเรเตอร์</strong> — สคริปต์ Python อ่าน JSON + เทมเพลต แล้วสร้าง <code>index.html</code> ใหม่เสมอ มีโหมด <code>--check</code> สำหรับทดสอบว่าเว็บไม่หลุดจากข้อมูล</li>
+  <li><strong>ชั้นเนื้อหา</strong> — หนังสือแต่ละเล่มเป็นไฟล์ HTML ในโฟลเดอร์ <code>books/</code> อ่านได้ทันทีบนทุกอุปกรณ์</li>
+  <li><strong>ชั้นกติกา</strong> — ไฟล์ <code>AGENTS.md</code> กำหนดว่า AI ทำอะไรได้เลย และอะไรต้องขออนุมัติก่อน (เช่น เผยแพร่สู่สาธารณะ)</li>
+</ol>
+
+<h2>ทำไมต้องแยกข้อมูลออกจากหน้าเว็บ</h2>
+<p>เพราะการแก้หน้า HTML ตรงๆ สะสมความผิดพลาดได้ง่าย (แท็กหาย เรียงผิด ลืมลิงก์) แต่การแก้ไฟล์ JSON ใบเดียวแล้วให้สคริปต์เจนใหม่ทุกครั้ง ทำให้ผลลัพธ์ "เหมือนเดิมทุกครั้ง" และตรวจได้ด้วยคำสั่งเดียว</p>
+
+<h2>รายการต้องทำก่อนเผยแพร่ (quality gates)</h2>
+<pre class="code">python scripts/build_shelf.py --check   # เว็บตรงกับข้อมูลไหม
+git diff --check                        # ไม่มีช่องว่างเกิน/ขัดแย้ง</pre>
+
+<h2>กติกาความปลอดภัยสำหรับ AI ผู้ดูแล</h2>
+<ul>
+  <li>AI เพิ่ม/แก้ไขหนังสือ แก้ JSON สร้างปก ทดสอบ และเตรียม commit ได้เอง</li>
+  <li>แต่ <strong>push ขึ้นเว็บสาธารณะต้องได้รับอนุมัติจากเจ้าของก่อนเสมอ</strong></li>
+  <li>ห้าม commit ข้อมูลส่วนตัว: โทเคน, คุกกี้, บราวเซอร์โปรไฟล์, พาทในเครื่อง</li>
+</ul>
+
+</main>
+</body>
+</html>
